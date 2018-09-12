@@ -27,21 +27,22 @@ const config = {
   entry,
   module: {
     rules: [
+      // {
+      //   test: /\.less$/,
+      //   exclude: /node_modules/,
+      //   use: [{
+      //       loader: 'style-loader'
+      //     }, {
+      //       loader: 'css-loader'
+      //     }, {
+      //       loader: 'less-loader',
+      //       options: {
+      //         strictMath: true,
+      //         noIeCompat: true
+      //       }
+      //     }]
+      // }, 
       {
-        test: /\.less$/,
-        exclude: /node_modules/,
-        use: [{
-            loader: 'style-loader'
-          }, {
-            loader: 'css-loader'
-          }, {
-            loader: 'less-loader',
-            options: {
-              strictMath: true,
-              noIeCompat: true
-            }
-          }]
-      }, {
         test: /\.js$/,
         exclude: /node_modules/,
         use: 'happypack/loader?id=babel'
@@ -77,7 +78,7 @@ const config = {
     }
   },
   plugin: [],
-  optimization: {}
+  // optimization: {}
 }
 
 module.exports = config;
