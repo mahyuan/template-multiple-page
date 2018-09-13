@@ -26,7 +26,7 @@ config.module.rules.push({
     {loader: 'style-loader'}, 
     {loader: 'css-loader'},
     {loader: 'postcss-loader',
-    options: },
+    options: 'last 2 chrome version'},
     {loader: 'less-loader'}
   ]
 })
