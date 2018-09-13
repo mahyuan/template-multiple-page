@@ -1,11 +1,13 @@
 const path = require('path');
 const fs = require('fs');
+const webpack = require('webpack');
 const config = require('./webpack');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
+console.log('=====mode=====', config.mode);
 config.output = {
-  path: path.resolve(__dirname, 'strict'),
-  filename:  `dist/js/[name]${config.mode === 'development' ? '' : '-[chunkhash]'}.js`,
+  path: path.resolve(__dirname, 'dist'),
+  filename:  `[name]${config.mode === 'development' ? '' : '-[hash]'}.js`,
 }
 
 config.optimization = {
@@ -30,8 +32,9 @@ config.module.rules.push({
     {loader: 'less-loader'}
   ]
 })
-config.plugin.push(
-  new webpack.MiniCssExtractPlugin({
-    filename: '[name].css'
-  })
+config.plugins.push(
+  // new webpack.MiniCssExtractPlugin({
+  //   filename: '[name].css'
+  // })
 )
+module.exports = config;

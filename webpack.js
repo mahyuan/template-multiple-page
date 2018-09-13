@@ -3,12 +3,15 @@ const path = require('path');
 const fs = require('fs');
 const webpack = require('webpack');
 const HappyPack = require('happypack');
+const numCPUs = require('os').cpus().length;
+const happyThreadPool = HappyPack.ThreadPool({ size: numCPUs })
+
 
 const ENTRIES = [
   path.join(__dirname, 'src/scripts')
 ]
 
-const dev = (process.env.NODE_ENV || 'development') === 'development';
+let dev = (process.env.NODE_ENV || 'development') === 'development';
 
 let entry = {};
 ENTRIES.forEach( dir => {
@@ -21,9 +24,10 @@ ENTRIES.forEach( dir => {
     }
   })
 })
-
+console.log('=======dev==============', dev);
 const config = {
-  mode: dev ? 'development' : 'projuction',
+  // mode: dev ? 'development' : 'production',
+  mode :'production',
   entry,
   module: {
     rules: [
@@ -69,6 +73,8 @@ const config = {
     ]
   },
   resolve: {
+    modules: [path.resolve(__dirname, 'node_modules')],
+    extensions: ['.js', '.json', '.less', '.html', '.css'],
     alias: {
       components: path.join(__dirname, 'src/scripts/components'),
       lib: path.join(__dirname, 'src/lib'),
@@ -77,7 +83,18 @@ const config = {
       filters: path.join(__dirname, 'src/filters')
     }
   },
-  plugin: [],
+  plugins: [
+    new webpack.HotModuleReplacementPlugin(),
+    // new webpack.optimize.CommonsChunkPlugin({
+    //   name: "common"
+    // }),
+    new HappyPack({
+      id: 'babel',
+      loaders: ['babel-loader?cacheDirectory'],
+      threadPool: happyThreadPool,
+      verbose: true
+    })
+  ],
   // optimization: {}
 }
 
