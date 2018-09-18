@@ -6,4 +6,5 @@ const app = new Koa();
 
 app.use(router.routes());
 app.use(router.allowedMethods());
-app.listen(3000);
+app.listen(3100);
+console.log('server start at port 3100!');
